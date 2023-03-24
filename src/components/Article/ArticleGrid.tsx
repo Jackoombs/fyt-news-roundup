@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const ArticleGrid = ({ articles, outlet }: Props) => {
-  const [activeArticleIndex, setActiveArticleIndex] = useState(0);
+  const [activeArticleIndex, setActiveArticleIndex] = useState(-1);
 
   const activeArticle = articles[activeArticleIndex];
 
@@ -28,7 +28,7 @@ export const ArticleGrid = ({ articles, outlet }: Props) => {
           >
             {articles.map((article, index) => (
               <ArticleCard
-                key={index}
+                key={article.link}
                 {...{
                   article,
                   index,
