@@ -23,10 +23,12 @@ export const outletRouter = router({
         },
         include: {
           articles: {
-            orderBy: {
-              date: "asc",
-              title: "asc",
-            },
+            orderBy: [
+              {
+                date: "asc",
+              },
+              { title: "asc" },
+            ],
           },
         },
       });
