@@ -1,8 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import Articles from "./articles";
 import Sidebar from "../components/Navbar";
-import Outlets from "../components/Outlet";
+import Outlets from "./outlets";
 
 export type ActiveItem = "OUTLETS" | "ARTICLES" | "CALENDAR" | "BOOKMARKED";
 
@@ -13,8 +14,8 @@ const Home: NextPage = () => {
     switch (activeItem) {
       case "OUTLETS":
         return <Outlets />;
-      // case "ARTICLES":
-      //   return <Articles />;
+      case "ARTICLES":
+        return <Articles />;
       // case 'CALENDAR':
       //   return <Calendar />;
       // case 'BOOKMARKED':
@@ -35,7 +36,7 @@ const Home: NextPage = () => {
         />
       </Head>
       <div className="flex min-h-screen bg-indigo-100 text-slate-900 dark:bg-slate-900">
-        <Sidebar {...{ activeItem, setActiveItem }} />
+        <Sidebar />
         <main className="w-full self-stretch pl-[8rem]">
           {renderActiveItem()}
         </main>
