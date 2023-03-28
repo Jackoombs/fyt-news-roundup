@@ -78,7 +78,6 @@ model Article {
   saved         Boolean @default(false)
   keywords      String[]
 
-  count Int       @default(1)
   date  DateTime @default(now())
 }
 
