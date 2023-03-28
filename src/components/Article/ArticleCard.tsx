@@ -1,26 +1,27 @@
-import { Article as ArticleType } from "@prisma/client";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { ArticleSaveButton } from "./ArticleSaveButton";
+import { Article } from "@prisma/client";
+import { ArticleListInput } from "../../types/trpc";
 
 interface Props {
-  article: ArticleType;
+  article: Article;
   index: number;
-  outlet: string;
   setActiveArticleIndex: React.Dispatch<React.SetStateAction<number>>;
+  query: ArticleListInput;
 }
 
 export const ArticleCard = ({
   article,
   index,
-  outlet,
   setActiveArticleIndex,
+  query,
 }: Props) => {
   return (
     <motion.a
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeInOut" }}
+      transition={{ duration: 0.5, delay: index * 0.05, ease: "easeInOut" }}
       className="flex flex-col justify-between rounded-lg bg-gradient-to-tr from-indigo-500 to-indigo-800 p-8 pb-4 text-indigo-50"
     >
       <div className="flex flex-col gap-1 pb-3">
@@ -42,7 +43,7 @@ export const ArticleCard = ({
             </p>
           )}
         </div>
-        <ArticleSaveButton link={article.link} outlet={outlet} />
+        <ArticleSaveButton link={article.link} query={query} />
       </div>
       <button
         onClick={() => setActiveArticleIndex(index)}

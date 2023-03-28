@@ -1,13 +1,14 @@
+import { OutletListOutput } from "../../types/trpc";
 import { trpc } from "../../utils/trpc";
 import { OutletCategoryCard } from "./OutletCategoryCard";
 
 interface Props {
-  activeOutlet: string;
+  activeOutlet: OutletListOutput[0];
 }
 
 export const OutletCategorys = ({ activeOutlet }: Props) => {
   const { data, isLoading, isError } = trpc.category.list.useQuery({
-    outletName: activeOutlet,
+    outletId: activeOutlet.id,
   });
 
   return (

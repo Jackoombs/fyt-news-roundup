@@ -19,4 +19,29 @@ export const articleRouter = router({
         },
       });
     }),
+  list: publicProcedure
+    .input(
+      z.object({
+        outletId: z.string().optional(),
+        saved: z.boolean().optional(),
+      })
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.article.findMany({
+        where: {
+          outlet: {
+            id: input.outletId ?? undefined,
+          },
+          saved: input.saved !== undefined ? input.saved : undefined,
+        },
+        orderBy: [{ date: "desc" }, { title: "asc" }],
+        include: {
+          outlet: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+    }),
 });

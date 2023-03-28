@@ -2,11 +2,14 @@ import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import clsx from "clsx";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { OutletListOutput } from "../../types/trpc";
 
 interface Props {
-  outlets: string[];
-  activeOutlet: string;
-  setActiveOutlet: React.Dispatch<React.SetStateAction<string | null>>;
+  outlets: OutletListOutput;
+  activeOutlet: OutletListOutput[0];
+  setActiveOutlet: React.Dispatch<
+    React.SetStateAction<OutletListOutput[0] | null>
+  >;
 }
 
 export const OutletSelect = ({
@@ -15,8 +18,7 @@ export const OutletSelect = ({
   setActiveOutlet,
 }: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const menuItems = outlets.filter((name) => name !== activeOutlet);
+  const menuItems = outlets.filter((outlet) => outlet.id !== activeOutlet.id);
 
   return (
     <div className="relative w-full max-w-[16rem]">
@@ -27,7 +29,7 @@ export const OutletSelect = ({
           menuOpen && "rounded-b-none bg-indigo-50"
         )}
       >
-        <h2 className="text-xl font-semibold">{activeOutlet}</h2>
+        <h2 className="text-xl font-semibold">{activeOutlet.name}</h2>
         <div className="flex h-8 w-6 flex-col items-center justify-self-end">
           <ChevronUpIcon className="-mb-2" />
           <ChevronDownIcon />
@@ -42,16 +44,16 @@ export const OutletSelect = ({
             transition={{ duration: 0.2, ease: "easeInOut" }}
             className="absolute left-0 z-20 w-full origin-top-left overflow-hidden rounded-b-lg bg-indigo-50"
           >
-            {menuItems.map((name) => (
-              <li key={name}>
+            {menuItems.map((outlet) => (
+              <li key={outlet.id}>
                 <button
                   className="w-full px-4 py-2 text-left text-lg font-medium duration-150 hover:bg-indigo-700 hover:text-indigo-50"
                   onClick={() => {
-                    setActiveOutlet(name);
+                    setActiveOutlet(outlet);
                     setMenuOpen(false);
                   }}
                 >
-                  {name}
+                  {outlet.name}
                 </button>
               </li>
             ))}

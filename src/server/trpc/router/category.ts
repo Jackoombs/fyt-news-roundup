@@ -5,15 +5,18 @@ export const categoryRouter = router({
   list: publicProcedure
     .input(
       z.object({
-        outletName: z.string(),
+        outletId: z.string(),
       })
     )
     .query(({ ctx, input }) => {
       return ctx.prisma.category.findMany({
         where: {
           outlet: {
-            name: input.outletName,
+            id: input.outletId,
           },
+        },
+        orderBy: {
+          url: "asc",
         },
       });
     }),

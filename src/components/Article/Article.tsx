@@ -1,14 +1,14 @@
-import { Article as ArticleType } from "@prisma/client";
+import { ArticleListOutput, ArticleListInput } from "../../types/trpc";
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import { ArticleSaveButton } from "./ArticleSaveButton";
 
 interface Props {
-  outlet: string;
-  article: ArticleType;
+  article: ArticleListOutput[0];
   setActiveArticleIndex: React.Dispatch<React.SetStateAction<number>>;
+  query: ArticleListInput;
 }
 
-export const Article = ({ outlet, article, setActiveArticleIndex }: Props) => {
+export const Article = ({ article, setActiveArticleIndex, query }: Props) => {
   const splitContent = (content: string | null) => {
     const contentArray = content?.split(`\/n`);
 
@@ -24,7 +24,7 @@ export const Article = ({ outlet, article, setActiveArticleIndex }: Props) => {
       <h1 className="max-w-lg pb-8 text-3xl font-semibold">{article.title}</h1>
       <h2 className="pb-4 text-lg font-bold">{article.summary}</h2>
       <div className="flex text-xs font-bold tracking-widest">
-        <p>{outlet}</p>
+        <p>{article.outlet.name}</p>
         <div className="my-1 mx-2 self-stretch border-r-2 border-indigo-50" />
         <p>{article.category}</p>
       </div>
@@ -42,7 +42,7 @@ export const Article = ({ outlet, article, setActiveArticleIndex }: Props) => {
           <ChevronLeftIcon className="w-5" />
           back to articles
         </button>
-        <ArticleSaveButton outlet={outlet} link={article.link} />
+        <ArticleSaveButton {...{ query }} link={article.link} />
       </div>
     </div>
   );

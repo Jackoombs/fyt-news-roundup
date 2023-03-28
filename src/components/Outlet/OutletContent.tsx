@@ -1,32 +1,20 @@
-import { Tab } from ".";
+import { Tab } from "../../pages/outlets";
 import { trpc } from "../../utils/trpc";
 import clsx from "clsx";
 import { ArticleGrid } from "../Article/ArticleGrid";
 import { OutletCategorys } from "./OutletCategorys";
+import { OutletListOutput } from "../../types/trpc";
 
 interface Props {
-  activeOutlet: string;
+  activeOutlet: OutletListOutput[0];
   activeTab: Tab["value"];
 }
 
 export const OutletContent = ({ activeOutlet, activeTab }: Props) => {
-  const { data, isLoading, error } = trpc.outlet.get.useQuery({
-    name: activeOutlet,
-  });
-
   const renderContent = () => {
     switch (activeTab) {
       case "ARTICLES":
-        return (
-          data?.articles &&
-          data.articles.length && (
-            <ArticleGrid
-              articles={data.articles}
-              {...{ activeTab }}
-              outlet={activeOutlet}
-            />
-          )
-        );
+        return activeOutlet && <ArticleGrid query={{}} />;
       case "CATEGORYS":
         return <OutletCategorys activeOutlet={activeOutlet} />;
     }

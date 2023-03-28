@@ -3,11 +3,12 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { trpc } from "../../utils/trpc";
+import { OutletListOutput } from "../../types/trpc";
 
 interface Props {
   category: Category;
   index: number;
-  activeOutlet: string;
+  activeOutlet: OutletListOutput[0];
 }
 
 export const OutletCategoryCard = ({
@@ -21,7 +22,7 @@ export const OutletCategoryCard = ({
     async onMutate(data) {
       await utils.category.list.cancel();
       const currentList = utils.category.list.getData({
-        outletName: activeOutlet,
+        outletId: activeOutlet.id,
       });
       console.log("list", currentList);
       if (currentList) {

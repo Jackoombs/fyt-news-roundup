@@ -1,4 +1,4 @@
-import { Tab } from ".";
+import { Tab } from "../../pages/outlets";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 

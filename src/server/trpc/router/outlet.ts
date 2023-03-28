@@ -7,6 +7,7 @@ export const outletRouter = router({
     return ctx.prisma.outlet.findMany({
       select: {
         name: true,
+        id: true,
       },
     });
   }),
@@ -20,16 +21,6 @@ export const outletRouter = router({
       return ctx.prisma.outlet.findUnique({
         where: {
           name: input.name,
-        },
-        include: {
-          articles: {
-            orderBy: [
-              {
-                date: "asc",
-              },
-              { title: "asc" },
-            ],
-          },
         },
       });
     }),

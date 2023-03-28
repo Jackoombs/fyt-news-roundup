@@ -1,30 +1,30 @@
 import { trpc } from "../../utils/trpc";
 import clsx from "clsx";
 import { HeartIcon } from "@heroicons/react/24/outline";
+import { ArticleListInput } from "../../types/trpc";
 
 interface Props {
   className?: string;
-  outlet: string;
   link: string;
+  query: ArticleListInput;
 }
 
-export const ArticleSaveButton = ({ className, outlet, link }: Props) => {
+export const ArticleSaveButton = ({ className, query, link }: Props) => {
   const utils = trpc.useContext();
 
-  const article = utils.outlet.get
-    .getData({ name: outlet })
-    ?.articles.find((article) => link === article.link);
+  const isSaved = utils.article.list
+    .getData(query)!
+    .find((article) => article.link === link)!.saved;
 
   const updateSaved = trpc.article.updateSaved.useMutation({
     async onMutate(data) {
-      await utils.outlet.get.cancel();
-      const currentArticleList = utils.outlet.get.getData({
-        name: outlet,
-      })?.articles;
+      await utils.article.list.cancel();
+      const currentArticleList = utils.article.list.getData(query);
 
       if (currentArticleList) {
         const newList = currentArticleList.map((listArticle) => {
           if (link === listArticle.link) {
+            console.log(listArticle.saved);
             listArticle.saved = data.saved;
             console.log(listArticle.saved);
 
@@ -32,63 +32,53 @@ export const ArticleSaveButton = ({ className, outlet, link }: Props) => {
           }
           return listArticle;
         });
-        utils.outlet.get.setData(
-          (prev) => {
-            console.log(prev);
-            if (prev) {
-              return { ...prev, articles: newList };
-            } else {
-              return prev;
-            }
-          },
-          { name: outlet }
-        );
+        utils.article.list.setData((prev) => {
+          console.log(prev, newList);
+          if (prev) {
+            console.log("hiyaaa");
+            return newList;
+          }
+        }, query);
       }
       return { currentArticleList };
     },
     onError(err, oldList, ctx) {
       if (ctx?.currentArticleList) {
-        utils.category.list.setData((prev) => {
+        utils.article.list.setData((prev) => {
           if (prev) {
-            return { ...prev, articles: ctx.currentArticleList };
-          } else {
-            return prev;
+            return ctx.currentArticleList;
           }
         });
       }
     },
     async onSettled() {
-      utils.outlet.get.invalidate({ name: outlet });
+      utils.article.invalidate();
     },
   });
 
   const onChange = () => {
-    updateSaved.mutate({ link, saved: !article!.saved });
+    updateSaved.mutate({ link, saved: !isSaved });
   };
 
   return (
-    <>
-      {article && (
-        <label
-          className={clsx(
-            "relative inline-flex h-10 w-10 cursor-pointer items-center justify-center duration-200",
-            className
-          )}
-        >
-          <input
-            type="checkbox"
-            checked={article.saved}
-            onChange={onChange}
-            className="sr-only"
-          />
-          <HeartIcon
-            className={clsx(
-              "w-7 duration-200",
-              article.saved ? "fill-indigo-50" : "fill-transparent"
-            )}
-          />
-        </label>
+    <label
+      className={clsx(
+        "relative inline-flex h-10 w-10 cursor-pointer items-center justify-center duration-200",
+        className
       )}
-    </>
+    >
+      <input
+        type="checkbox"
+        checked={isSaved}
+        onChange={onChange}
+        className="sr-only"
+      />
+      <HeartIcon
+        className={clsx(
+          "w-7 duration-200",
+          isSaved ? "fill-indigo-50" : "fill-transparent"
+        )}
+      />
+    </label>
   );
 };

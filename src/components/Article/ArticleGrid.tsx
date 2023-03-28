@@ -1,16 +1,26 @@
-import { Article as ArticleType } from "@prisma/client";
-import { Article } from "./Article";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { useState } from "react";
 import { ArticleCard } from "./ArticleCard";
+import { useInfiniteScroll } from "../../hooks/useInfiniteScroll";
+import type { ArticleListInput } from "../../types/trpc";
+import { Article } from "./Article";
+import { trpc } from "../../utils/trpc";
 
 interface Props {
-  articles: ArticleType[];
-  outlet: string;
+  query: ArticleListInput;
 }
 
-export const ArticleGrid = ({ articles, outlet }: Props) => {
+export const ArticleGrid = ({ query }: Props) => {
   const [activeArticleIndex, setActiveArticleIndex] = useState(-1);
+
+  const {
+    data: articles,
+    isLoading,
+    error,
+  } = trpc.article.list.useQuery(query);
+
+  if (isLoading) return <h1>Loading...</h1>;
+  if (error || !articles) return <h1>Error</h1>;
 
   const activeArticle = articles[activeArticleIndex];
 
@@ -32,9 +42,9 @@ export const ArticleGrid = ({ articles, outlet }: Props) => {
                 {...{
                   article,
                   index,
-                  outlet,
                   activeArticleIndex,
                   setActiveArticleIndex,
+                  query,
                 }}
               />
             ))}
@@ -51,7 +61,7 @@ export const ArticleGrid = ({ articles, outlet }: Props) => {
           >
             <Article
               article={activeArticle}
-              {...{ outlet, setActiveArticleIndex }}
+              {...{ setActiveArticleIndex, query }}
             />
           </motion.div>
         )}
