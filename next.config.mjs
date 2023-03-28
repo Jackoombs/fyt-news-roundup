@@ -13,5 +13,15 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  async redirects() {
+    return [
+      {
+        source: "/",
+        destination: "/outlets",
+        permanent: true,
+      },
+    ];
+  },
 };
+
 export default config;
