@@ -7,14 +7,11 @@ interface Props {
   className?: string;
   link: string;
   query: ArticleListInput;
+  saved: boolean;
 }
 
-export const ArticleSaveButton = ({ className, query, link }: Props) => {
+export const ArticleSaveButton = ({ className, query, link, saved }: Props) => {
   const utils = trpc.useContext();
-
-  const isSaved = utils.article.list
-    .getData(query)!
-    .find((article) => article.link === link)!.saved;
 
   const updateSaved = trpc.article.updateSaved.useMutation({
     async onMutate(data) {
@@ -24,14 +21,11 @@ export const ArticleSaveButton = ({ className, query, link }: Props) => {
       if (currentArticleList) {
         const newList = currentArticleList.map((listArticle) => {
           if (link === listArticle.link) {
-            console.log(listArticle.saved);
-            listArticle.saved = data.saved;
-            console.log(listArticle.saved);
-
-            return listArticle;
+            return { ...listArticle, saved: data.saved };
           }
           return listArticle;
         });
+
         utils.article.list.setData((prev) => {
           console.log(prev, newList);
           if (prev) {
@@ -57,28 +51,32 @@ export const ArticleSaveButton = ({ className, query, link }: Props) => {
   });
 
   const onChange = () => {
-    updateSaved.mutate({ link, saved: !isSaved });
+    updateSaved.mutate({ link, saved: !saved });
   };
 
   return (
-    <label
-      className={clsx(
-        "relative inline-flex h-10 w-10 cursor-pointer items-center justify-center duration-200",
-        className
+    <>
+      {saved !== undefined && (
+        <label
+          className={clsx(
+            "relative inline-flex h-10 w-10 cursor-pointer items-center justify-center duration-200",
+            className
+          )}
+        >
+          <input
+            type="checkbox"
+            checked={saved}
+            onChange={onChange}
+            className="sr-only"
+          />
+          <HeartIcon
+            className={clsx(
+              "w-7 duration-200",
+              saved ? "fill-indigo-50" : "fill-transparent"
+            )}
+          />
+        </label>
       )}
-    >
-      <input
-        type="checkbox"
-        checked={isSaved}
-        onChange={onChange}
-        className="sr-only"
-      />
-      <HeartIcon
-        className={clsx(
-          "w-7 duration-200",
-          isSaved ? "fill-indigo-50" : "fill-transparent"
-        )}
-      />
-    </label>
+    </>
   );
 };
