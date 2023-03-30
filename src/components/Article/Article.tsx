@@ -20,7 +20,7 @@ export const Article = ({ article, setActiveArticleIndex, query }: Props) => {
   };
 
   return (
-    <div className="relative flex w-full max-w-4xl flex-col items-start rounded-xl bg-indigo-600 px-8 py-24 text-indigo-50">
+    <article className="relative flex w-full max-w-4xl flex-col items-start rounded-xl bg-indigo-600 px-8 py-24 text-indigo-50">
       <h1 className="max-w-lg pb-8 text-3xl font-semibold">{article.title}</h1>
       <h2 className="pb-4 text-lg font-bold">{article.summary}</h2>
       <div className="flex text-xs font-bold tracking-widest">
@@ -42,8 +42,12 @@ export const Article = ({ article, setActiveArticleIndex, query }: Props) => {
           <ChevronLeftIcon className="w-5" />
           back to articles
         </button>
-        <ArticleSaveButton {...{ query }} link={article.link} />
+        <ArticleSaveButton
+          {...{ query }}
+          saved={article.saved}
+          link={article.link}
+        />
       </div>
-    </div>
+    </article>
   );
 };
