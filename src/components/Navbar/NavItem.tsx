@@ -14,22 +14,24 @@ export const NavItem = ({ link, children }: Props) => {
   const isActive = router.pathname.startsWith(link);
 
   return (
-    <Link href={link} className="relative">
-      <div
-        className={clsx(
-          "relative z-10 flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-lg p-2 text-xs outline outline-0 outline-indigo-500",
-          isActive && "hover:outline-2"
+    <li role="menuitem" className="flex items-center justify-center">
+      <Link href={link} className="relative w-full">
+        <div
+          className={clsx(
+            "relative z-10 flex aspect-square w-full flex-col items-center justify-center gap-2 rounded-lg p-2 text-xs outline outline-0 outline-indigo-500",
+            !isActive && "hover:outline-2"
+          )}
+        >
+          {children}
+        </div>
+        {isActive && (
+          <motion.div
+            transition={{ duration: 0.3 }}
+            layoutId="menuItem"
+            className="absolute left-0 top-0 h-full w-full rounded-lg bg-indigo-500"
+          />
         )}
-      >
-        {children}
-      </div>
-      {isActive && (
-        <motion.div
-          transition={{ duration: 0.3 }}
-          layoutId="menuItem"
-          className="absolute left-0 top-0 h-full w-full rounded-lg bg-indigo-500"
-        />
-      )}
-    </Link>
+      </Link>
+    </li>
   );
 };

@@ -54,7 +54,7 @@ export const OutletCategoryCard = ({
   };
 
   return (
-    <motion.div
+    <motion.li
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{
@@ -90,6 +90,6 @@ export const OutletCategoryCard = ({
           <PowerIcon className="w-7 text-slate-900" />
         </div>
       </label>
-    </motion.div>
+    </motion.li>
   );
 };

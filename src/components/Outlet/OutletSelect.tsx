@@ -21,7 +21,11 @@ export const OutletSelect = ({
   const menuItems = outlets.filter((outlet) => outlet.id !== activeOutlet.id);
 
   return (
-    <div className="relative w-full max-w-[16rem]">
+    <div
+      role="listbox"
+      aria-expanded={menuOpen}
+      className="relative w-full max-w-[16rem]"
+    >
       <button
         onClick={() => setMenuOpen((prev) => !prev)}
         className={clsx(
@@ -45,7 +49,7 @@ export const OutletSelect = ({
             className="absolute left-0 z-20 w-full origin-top-left overflow-hidden rounded-b-lg bg-indigo-50"
           >
             {menuItems.map((outlet) => (
-              <li key={outlet.id}>
+              <li role="option" key={outlet.id}>
                 <button
                   className="w-full px-4 py-2 text-left text-lg font-medium duration-150 hover:bg-indigo-700 hover:text-indigo-50"
                   onClick={() => {
