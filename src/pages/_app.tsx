@@ -25,7 +25,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
         </Head>
         <div className="flex min-h-screen bg-indigo-100 text-slate-900 dark:bg-slate-900">
           <Sidebar />
-          <main className="w-full self-stretch pl-[8rem]">
+          <main className="w-full self-stretch pl-[6rem]">
             <Component {...pageProps} />
           </main>
         </div>
