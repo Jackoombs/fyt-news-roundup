@@ -16,15 +16,6 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    "src/__tests__/unit/components/Sidebar.spec.tsx",
-    "src/cypress/e2e/app.cy.js",
-    "src/cypress/support/seed.js"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs"],
   "exclude": ["node_modules", "src/cypress/**/*", "./cypress.config.ts"]
 }
