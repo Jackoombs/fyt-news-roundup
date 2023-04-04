@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { mockArticle } from "../../__tests__/data/mockArticleData";
 import { ArticleCreateInput } from "../../types/trpc";
 
