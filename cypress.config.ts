@@ -23,14 +23,6 @@ export default defineConfig({
     },
     supportFile: "src/cypress/support/e2e.ts",
     specPattern: "src/cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
-    env: {
-      DATABASE_URL:
-        "postgres://Jackoombs:rUwGkB45vcFs@ep-falling-grass-860682.eu-central-1.aws.neon.tech/neondb",
-      NEXTAUTH_SECRET: "a",
-      NEXTAUTH_URL: "http://localhost:3000",
-      DISCORD_CLIENT_ID: "",
-      DISCORD_CLIENT_SECRET: "",
-    },
   },
 
   component: {
