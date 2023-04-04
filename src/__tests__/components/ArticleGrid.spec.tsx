@@ -1,11 +1,11 @@
-import { getByText, render, screen } from "@testing-library/react";
-import { mockArticleData } from "../data/mockArticleData";
+import { render, screen } from "@testing-library/react";
+import { mockArticleArray } from "../data/mockArticleData";
 import { ArticleGrid } from "../../components/Article/ArticleGrid";
 import { ArticleCard } from "../../components/Article/ArticleCard";
 import { Article } from "../../components/Article/Article";
 import { trpc } from "../../utils/trpc";
 
-jest.mock("../../utils/trpc", () => ({
+jest.mock("../utils/trpc", () => ({
   trpc: {
     article: {
       list: {
@@ -15,12 +15,12 @@ jest.mock("../../utils/trpc", () => ({
   },
 }));
 
-jest.mock("../../components/Article/ArticleCard", () => ({
+jest.mock("../components/Article/ArticleCard", () => ({
   __esModule: true,
   ArticleCard: jest.fn(() => <li>Article Card</li>),
 }));
 
-jest.mock("../../components/Article/Article", () => ({
+jest.mock("../components/Article/Article", () => ({
   __esModule: true,
   Article: jest.fn(() => <li>Article</li>),
 }));
@@ -28,7 +28,7 @@ jest.mock("../../components/Article/Article", () => ({
 describe("ArticleGrid", () => {
   test("query is called", async () => {
     (trpc.article.list.useQuery as jest.Mock).mockReturnValue({
-      data: mockArticleData,
+      data: mockArticleArray,
       isLoading: false,
       error: false,
     });
@@ -40,7 +40,7 @@ describe("ArticleGrid", () => {
 
   test("articles are rendered with data is returned", () => {
     (trpc.article.list.useQuery as jest.Mock).mockReturnValue({
-      data: mockArticleData,
+      data: mockArticleArray,
       isLoading: false,
       error: false,
     });
@@ -48,7 +48,7 @@ describe("ArticleGrid", () => {
     render(<ArticleGrid query={{}} />);
     const articles = screen.getAllByRole("listitem");
 
-    expect(articles).toHaveLength(mockArticleData.length);
+    expect(articles).toHaveLength(mockArticleArray.length);
   });
 
   test("prompt if no articles are found", () => {
@@ -68,7 +68,7 @@ describe("ArticleGrid", () => {
 
   test("spinner rendered when data is fetching", () => {
     (trpc.article.list.useQuery as jest.Mock).mockReturnValue({
-      data: mockArticleData,
+      data: mockArticleArray,
       isLoading: true,
       error: false,
     });
@@ -82,7 +82,7 @@ describe("ArticleGrid", () => {
 
   test("error message appears on error", () => {
     (trpc.article.list.useQuery as jest.Mock).mockReturnValue({
-      data: mockArticleData,
+      data: mockArticleArray,
       isLoading: false,
       error: true,
     });
