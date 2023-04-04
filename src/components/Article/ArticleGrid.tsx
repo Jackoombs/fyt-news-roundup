@@ -67,7 +67,6 @@ export const ArticleGrid = ({ query }: Props) => {
                 {...{
                   article,
                   index,
-                  activeArticleIndex,
                   setActiveArticleIndex,
                   query,
                 }}

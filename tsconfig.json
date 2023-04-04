@@ -22,7 +22,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "src/__tests__/components/Sidebar.spec.tsx"
+    "src/__tests__/unit/components/Sidebar.spec.tsx",
+    "src/cypress/e2e/app.cy.js",
+    "src/cypress/support/seed.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/cypress/**/*", "./cypress.config.ts"]
 }
