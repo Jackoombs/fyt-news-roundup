@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { ArticleGrid } from "../../components/Article/ArticleGrid";
-import { trpc } from "../../utils/trpc";
 
 const Saved = () => {
   return (
