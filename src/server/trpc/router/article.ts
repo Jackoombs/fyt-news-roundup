@@ -44,4 +44,50 @@ export const articleRouter = router({
         },
       });
     }),
+  create: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().optional(),
+        category: z.string().optional(),
+        outletName: z.string(),
+        summary: z.string().optional(),
+        content: z.string().optional(),
+        link: z.string(),
+        saved: z.boolean(),
+        date: z.date(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.article.create({
+        data: {
+          id: input.id,
+          title: input.title,
+          category: input.category,
+          summary: input.summary,
+          content: input.content,
+          link: input.link,
+          saved: input.saved,
+          date: input.date,
+          outlet: {
+            connect: {
+              name: input.outletName,
+            },
+          },
+        },
+      });
+    }),
+  deleteByLink: publicProcedure
+    .input(
+      z.object({
+        link: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.article.delete({
+        where: {
+          link: input.link,
+        },
+      });
+    }),
 });
