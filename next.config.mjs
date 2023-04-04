@@ -22,6 +22,9 @@ const config = {
       },
     ];
   },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
 };
 
 export default config;

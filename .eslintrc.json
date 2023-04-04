@@ -1,6 +1,8 @@
 {
   "parser": "@typescript-eslint/parser",
-  "parserOptions": {},
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "plugins": ["@typescript-eslint", "cypress"],
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
