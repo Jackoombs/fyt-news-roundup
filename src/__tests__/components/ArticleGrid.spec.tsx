@@ -5,7 +5,7 @@ import { ArticleCard } from "../../components/Article/ArticleCard";
 import { Article } from "../../components/Article/Article";
 import { trpc } from "../../utils/trpc";
 
-jest.mock("../utils/trpc", () => ({
+jest.mock("../../utils/trpc", () => ({
   trpc: {
     article: {
       list: {
@@ -15,12 +15,12 @@ jest.mock("../utils/trpc", () => ({
   },
 }));
 
-jest.mock("../components/Article/ArticleCard", () => ({
+jest.mock("../../components/Article/ArticleCard", () => ({
   __esModule: true,
   ArticleCard: jest.fn(() => <li>Article Card</li>),
 }));
 
-jest.mock("../components/Article/Article", () => ({
+jest.mock("../../components/Article/Article", () => ({
   __esModule: true,
   Article: jest.fn(() => <li>Article</li>),
 }));

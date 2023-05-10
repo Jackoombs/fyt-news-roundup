@@ -1,13 +1,12 @@
-import { Tab } from "../../pages/outlets";
-import { trpc } from "../../utils/trpc";
 import clsx from "clsx";
 import { ArticleGrid } from "../Article/ArticleGrid";
 import { OutletCategorys } from "./OutletCategorys";
 import { OutletListOutput } from "../../types/trpc";
+import { Tabs } from "../../pages/outlets";
 
 interface Props {
   activeOutlet: OutletListOutput[0];
-  activeTab: Tab["value"];
+  activeTab: Tabs;
 }
 
 export const OutletContent = ({ activeOutlet, activeTab }: Props) => {
