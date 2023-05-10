@@ -4,16 +4,13 @@ import { OutletContent } from "../../components/Outlet/OutletContent";
 import { OutletTabs } from "../../components/Outlet/OutletTabs";
 import { OutletListOutput } from "../../types/trpc";
 
-export interface Tab {
-  name: string;
-  value: "ARTICLES" | "CATEGORYS";
-}
+export type Tabs = "ARTICLES" | "CATEGORYS";
 
 const Outlets = () => {
   const [activeOutlet, setActiveOutlet] = useState<OutletListOutput[0] | null>(
     null
   );
-  const [activeTab, setActiveTab] = useState<Tab["value"]>("ARTICLES");
+  const [activeTab, setActiveTab] = useState<Tabs>("ARTICLES");
 
   return (
     <div className="mx-auto flex h-full flex-col pb-10">
