@@ -1,3 +1,4 @@
+import { endOfDay, startOfDay } from "date-fns";
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
 
@@ -24,6 +25,7 @@ export const articleRouter = router({
       z.object({
         outletId: z.string().optional(),
         saved: z.boolean().optional(),
+        date: z.date().optional(),
       })
     )
     .query(({ ctx, input }) => {
@@ -33,6 +35,10 @@ export const articleRouter = router({
             id: input.outletId ?? undefined,
           },
           saved: input.saved !== undefined ? input.saved : undefined,
+          date: {
+            gte: input.date && startOfDay(input.date),
+            lt: input.date && endOfDay(input.date),
+          },
         },
         orderBy: [{ date: "desc" }, { title: "asc" }],
         include: {
