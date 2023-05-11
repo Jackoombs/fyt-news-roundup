@@ -1,12 +1,3 @@
 {
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "plugins": ["@typescript-eslint", "cypress"],
-  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
-  "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn"
-  },
-  "ignorePatterns": "src/cypress/**/*"
+  "extends": "next/core-web-vitals"
 }
