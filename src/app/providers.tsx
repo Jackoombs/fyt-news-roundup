@@ -7,5 +7,9 @@ interface Props {
 }
 
 export const Providers = ({ children }: Props) => {
-  return <ThemeProvider attribute="class">{children}</ThemeProvider>;
+  return (
+    <ThemeProvider attribute="class" enableSystem={false}>
+      {children}
+    </ThemeProvider>
+  );
 };
