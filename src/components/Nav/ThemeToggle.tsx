@@ -2,27 +2,26 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useTheme } from "next-themes";
-import clsx from "clsx";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/solid";
+import { useTheme } from "next-themes";
 
 const ThemeToggle = () => {
   const [isOn, setIsOn] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  const switchTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <div>
       <button
-        onClick={() => setIsOn(!isOn)}
-        className="h-8 w-16 bg-slate-900 rounded-full ring-1 ring-slate-200"
+        onClick={switchTheme}
+        className="h-8 w-16 bg-slate-900 rounded-full dark:bg-slate-200"
       >
-        <span
-          className={clsx(
-            "bg-white h-[30px] w-[30px] rounded-full duration-300 ease-in-out flex items-center justify-center overflow-hidden",
-            isOn ? "translate-x-[33px]" : "translate-x-[1px]"
-          )}
-        >
-          <AnimatePresence mode="popLayout" initial={true}>
-            {!isOn && (
+        <span className="h-[30px] w-[30px] rounded-full duration-300 ease-in-out flex items-center justify-center overflow-hidden translate-x-[1px] bg-white dark:translate-x-[33px] dark:bg-slate-900">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {theme === "light" && (
               <motion.div
                 key={0}
                 initial={{ y: 35 }}
@@ -34,7 +33,7 @@ const ThemeToggle = () => {
               </motion.div>
             )}
 
-            {isOn && (
+            {theme === "dark" && (
               <motion.div
                 key={1}
                 initial={{ y: 35 }}
@@ -42,7 +41,7 @@ const ThemeToggle = () => {
                 exit={{ y: -35 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <MoonIcon className="h-5" />
+                <MoonIcon className="h-5 text-slate-200" />
               </motion.div>
             )}
           </AnimatePresence>
