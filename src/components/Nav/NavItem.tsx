@@ -30,7 +30,7 @@ const NavItem = ({ children, link }: Props) => {
         {children}
       </span>
       {isActive && (
-        <motion.div
+        <motion.span
           transition={{ duration: 0.3, ease: "easeInOut" }}
           layoutId="menuItem"
           className="absolute left-0 top-0 h-full w-full rounded-lg bg-white z-index ring-1 ring-slate-700 dark:bg-slate-900"
