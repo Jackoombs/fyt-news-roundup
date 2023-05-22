@@ -23,7 +23,7 @@ const OutletSelect = ({ currentOutlet, outlets }: Props) => {
   const router = useRouter();
 
   const handleChange = (value: string) => {
-    const newPath = path.join("outlets", value);
+    const newPath = path.join("outlets", value, "overview");
     router.push(newPath);
   };
 
