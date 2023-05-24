@@ -12,11 +12,18 @@ export interface Outlets {
   }[];
 }
 
+export interface Articles {
+  articles: Article[];
+}
+
 export interface Article {
   id: string;
   title?: string;
   category?: string;
   outletId: string;
+  outlet: {
+    name: string;
+  };
   summary?: string;
   content?: string;
   condensedBody?: string;
@@ -24,4 +31,43 @@ export interface Article {
   saved: boolean;
   keywords: string[];
   date?: Date;
+}
+
+export interface FilterByArticle {}
+
+export interface Categories {
+  categories: Category[];
+}
+
+export interface Category {
+  url: string;
+  active: boolean;
+  outletName: string;
+}
+
+export interface OrderBy {
+  field: "title" | "date" | "url";
+  direction: "asc" | "desc";
+}
+
+export interface GetArticlesOptions {
+  filterBy?: {
+    outletName?: string;
+    category?: string;
+    dateStart?: Date;
+    dateEnd?: Date;
+  };
+  orderBy?: OrderBy[];
+  take?: number;
+  skip?: number;
+}
+
+export interface GetCategoriesOptions {
+  filterBy?: {
+    outletName?: string;
+    active?: boolean;
+  };
+  orderBy?: OrderBy[];
+  take?: number;
+  skip?: number;
 }
