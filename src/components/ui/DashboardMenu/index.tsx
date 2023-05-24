@@ -4,7 +4,7 @@ interface DashboardMenuProps {
   children: React.ReactNode;
   padding?: string;
 }
-const DashboardMenu = ({ children, padding = "mb-4" }: DashboardMenuProps) => {
+const DashboardMenu = ({ children, padding = "mb-8" }: DashboardMenuProps) => {
   return (
     <nav
       className={clsx(
