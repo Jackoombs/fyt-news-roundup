@@ -33,8 +33,10 @@ export default function RootLayout({
       >
         <Providers>
           <Nav />
-          <main className="bg-white dark:bg-slate-950 px-[5%] pt-10">
-            <div className="max-w-[80rem] w-full mx-auto">{children}</div>
+          <main className="bg-white dark:bg-slate-950 pr-[5%] pl-[calc(5%+8rem)] pt-10 w-screen">
+            <div className="max-w-[80rem] w-full flex flex-col mx-auto">
+              {children}
+            </div>
           </main>
         </Providers>
       </body>

@@ -9,7 +9,7 @@ import ThemeToggle from "@/components/Nav/ThemeToggle";
 
 const Nav = () => {
   return (
-    <aside className="h-full w-32 border-r border-slate-200 text-slate-900 flex flex-col items-center justify-between bg-slate-100 py-8 dark:bg-slate-950 dark:border-slate-700">
+    <aside className="fixed left-0 top-0 h-full w-32 border-r border-slate-200 text-slate-900 flex flex-col items-center justify-between bg-slate-100 py-8 dark:bg-slate-950 dark:border-slate-700">
       <span></span>
       <nav
         className="space-y-10 font-display"
