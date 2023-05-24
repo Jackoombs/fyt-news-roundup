@@ -25,17 +25,6 @@ const Layout = async ({ params, children }: Props) => {
     `,
   });
 
-  const articles = await apollo.query({
-    query: gql`
-      query {
-        articles {
-          title
-          id
-        }
-      }
-    `,
-  });
-
   const currentPath = path.join("outlets", params.outletName);
 
   return (
