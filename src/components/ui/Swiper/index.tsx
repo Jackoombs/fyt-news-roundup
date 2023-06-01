@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, useState } from "react";
+import { Children, useEffect, useState } from "react";
 import { Swiper as SwiperType, SwiperOptions } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
@@ -29,6 +29,12 @@ const Carousel = ({
   const [swiper, setSwiper] = useState<SwiperType>();
   const [slideStatus, setSlideStatus] = useState<SlideStatus>(null);
 
+  useEffect(() => {
+    setShow(true);
+  }, []);
+
+  const [show, setShow] = useState(false);
+
   const handleSwiper = (swiper: SwiperType) => {
     setSwiper(swiper);
     handleSlideChange(swiper);
@@ -47,19 +53,23 @@ const Carousel = ({
   };
 
   return (
-    <div className="relative">
-      <Swiper
-        onSlideChange={handleSlideChange}
-        onSwiper={handleSwiper}
-        className="p-1"
-        {...options}
-      >
-        {Children.map(children, (child: React.ReactNode) => (
-          <SwiperSlide className="p-1">{child}</SwiperSlide>
-        ))}
-      </Swiper>
-      <SwiperButtons {...{ swiper, slideStatus }} />
-    </div>
+    <>
+      {show && (
+        <div className="relative">
+          <Swiper
+            onSlideChange={handleSlideChange}
+            onSwiper={handleSwiper}
+            className="p-1"
+            {...options}
+          >
+            {Children.map(children, (child: React.ReactNode) => (
+              <SwiperSlide className="p-1">{child}</SwiperSlide>
+            ))}
+          </Swiper>
+          <SwiperButtons {...{ swiper, slideStatus }} />
+        </div>
+      )}
+    </>
   );
 };
 
