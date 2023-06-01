@@ -22,9 +22,7 @@ const NavItem = ({ children, link }: Props) => {
       <p
         className={clsx(
           "mx-auto relative gap-1 z-10 flex flex-col items-center justify-center duration-300",
-          !isActive
-            ? "text-slate-500 dark:text-slate-800"
-            : "dark:text-slate-200"
+          !isActive && "text-ring"
         )}
       >
         {children}
@@ -33,7 +31,7 @@ const NavItem = ({ children, link }: Props) => {
         <motion.span
           transition={{ duration: 0.3, ease: "easeInOut" }}
           layoutId="menuItem"
-          className="absolute left-0 top-0 h-full w-full rounded-lg bg-white z-index ring-1 ring-slate-700 dark:bg-slate-900"
+          className="absolute left-0 top-0 h-full w-full rounded-lg z-index ring-1 ring-ring"
         />
       )}
     </Link>
