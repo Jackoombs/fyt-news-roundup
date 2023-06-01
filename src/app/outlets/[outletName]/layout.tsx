@@ -43,6 +43,9 @@ const Layout = async ({ params, children }: Props) => {
         <DashboardMenuItem link={path.join(currentPath, "categories")}>
           Categories
         </DashboardMenuItem>
+        <DashboardMenuItem link={path.join(currentPath, "articles")}>
+          Articles
+        </DashboardMenuItem>
       </DashboardMenu>
       <div className="">{children}</div>
     </>
