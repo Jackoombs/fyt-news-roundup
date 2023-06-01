@@ -9,14 +9,14 @@ import ThemeToggle from "@/components/Nav/ThemeToggle";
 
 const Nav = () => {
   return (
-    <aside className="fixed left-0 top-0 h-full w-32 border-r border-slate-200 text-slate-900 flex flex-col items-center justify-between bg-slate-100 py-8 dark:bg-slate-950 dark:border-slate-700">
+    <aside className="fixed left-0 top-0 h-full w-32 border-r border-ring flex flex-col items-center justify-between py-8">
       <span></span>
       <nav
         className="space-y-10 font-display"
         role="menu"
         aria-label="Main Menu"
       >
-        <NavItem link="/outlets">
+        <NavItem link="/outlets/BBC">
           <ChatBubbleBottomCenterTextIcon className="h-10" /> Outlets
         </NavItem>
         <NavItem link="/articles">
