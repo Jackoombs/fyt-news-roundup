@@ -20,14 +20,20 @@ const Card = ({ children, className }: Props) => {
 
 interface CardHeaderProps {
   children: React.ReactNode;
+  margin?: string;
   size?: "text-sm" | "text-md" | "text-lg";
 }
 
-const CardHeader = ({ children, size = "text-sm" }: CardHeaderProps) => {
+const CardHeader = ({
+  children,
+  margin = "mb-2",
+  size = "text-sm",
+}: CardHeaderProps) => {
   return (
     <h3
       className={clsx(
-        "text-slate-900 font-bold line-clamp-2 mb-2 dark:text-slate-200",
+        "text-slate-900 font-bold line-clamp-2 dark:text-slate-200",
+        margin,
         size
       )}
     >
