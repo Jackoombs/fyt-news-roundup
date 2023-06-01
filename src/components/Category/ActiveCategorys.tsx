@@ -1,9 +1,10 @@
 import { getClient } from "@/lib/client";
 import { GET_CATEGORYS } from "@/lib/queries";
 import { Categories, GetCategoriesOptions } from "@/types/graphql";
-import { Card } from "../ui/Card";
+import { Card, CardHeader } from "../ui/Card";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import DashboardSubHeader from "../ui/DashboardSubHeader";
+import { getPathname } from "@/lib/utils";
 import clsx from "clsx";
 
 interface Props {
@@ -18,16 +19,11 @@ const ActiveCategorys = async ({ options, className }: Props) => {
     variables: options,
   });
 
-  const getPathname = (url: string) => {
-    const parsedUrl = new URL(url);
-    return parsedUrl.pathname;
-  };
-
   return (
     <div className={className}>
       <DashboardSubHeader>Active pages</DashboardSubHeader>
-      <Card>
-        <ul className="divide-y-[1px] divide-slate-200 dark:divide-slate-800">
+      <Card className="max-h-[30rem] overflow-y-auto">
+        <ul className="divide-y-[1px] divide-slate-200 dark:divide-slate-800 max-h-">
           {data.categories.map((category, index) => {
             const pathname = getPathname(category.url);
             return (
@@ -39,7 +35,7 @@ const ActiveCategorys = async ({ options, className }: Props) => {
                 )}
                 key={pathname}
               >
-                <p>{pathname}</p>
+                <CardHeader margin="">{pathname}</CardHeader>
                 <a
                   target="_blank"
                   className="flex gap-1 bg-blue-600 text-white text-sm px-2 py-0.5 rounded-xl items-center"
