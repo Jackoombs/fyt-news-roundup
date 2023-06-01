@@ -32,7 +32,7 @@ const OutletSelect = ({ currentOutlet, outlets }: Props) => {
       defaultValue={removeWhiteSpace(currentOutlet)}
       onValueChange={handleChange}
     >
-      <SelectTrigger>
+      <SelectTrigger className="w-56">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
