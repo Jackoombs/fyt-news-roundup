@@ -8,8 +8,9 @@ import { Carousel } from "../ui/Swiper";
 
 interface Props {
   options?: GetArticlesOptions;
+  articlePagePath: string;
 }
-const RecentArticles = async ({ options }: Props) => {
+const RecentArticles = async ({ options, articlePagePath }: Props) => {
   const apollo = getClient();
 
   const { data } = await apollo.query<Articles>({
@@ -23,7 +24,10 @@ const RecentArticles = async ({ options }: Props) => {
 
       <Carousel>
         {data.articles.map((article, index) => (
-          <ArticleThumbnail key={article.id} {...{ article, index }} />
+          <ArticleThumbnail
+            key={article.id}
+            {...{ article, index, articlePagePath }}
+          />
         ))}
       </Carousel>
     </div>
