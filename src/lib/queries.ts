@@ -1,7 +1,30 @@
-import { getClient } from "./client";
 import { gql } from "@apollo/client";
 
-const apollo = getClient();
+export const GET_ARTICLE = gql`
+  query ($id: String!) {
+    article(id: $id) {
+      id
+      saved
+      title
+      date
+      summary
+      content
+      keywords
+      outlet {
+        name
+      }
+      category
+    }
+  }
+`;
+
+export const GET_OUTLETS = gql`
+  query {
+    outlets {
+      name
+    }
+  }
+`;
 
 export const GET_ARTICLES = gql`
   query (
@@ -11,9 +34,27 @@ export const GET_ARTICLES = gql`
     $skip: Int
   ) {
     articles(filterBy: $filterBy, orderBy: $orderBy, take: $take, skip: $skip) {
+      id
       title
       date
+      outlet {
+        name
+      }
+      category
+    }
+  }
+`;
+
+export const GET_RELATED_ARTICLES = gql`
+  query ($id: String!, $keywords: [String!]!, $take: Int) {
+    relatedArticles(id: $id, keywords: $keywords, take: $take) {
+      id
+      saved
+      title
+      date
+      summary
       content
+      keywords
       outlet {
         name
       }
