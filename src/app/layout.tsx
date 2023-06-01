@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={clsx(
-          "min-h-screen grid grid-cols-[auto_1fr]",
+          "min-h-screen",
           raleway.className,
           raleway.variable,
           merriweather.className,
@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <Providers>
           <Nav />
-          <main className="bg-white dark:bg-slate-950 pr-[5%] pl-[calc(5%+8rem)] pt-10 w-screen">
+          <main className="bg-white dark:bg-slate-950 pr-[5%] pl-[calc(5%+8rem)] py-10 min-h-screen">
             <div className="max-w-[80rem] w-full flex flex-col mx-auto">
               {children}
             </div>
