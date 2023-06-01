@@ -25,15 +25,13 @@ export interface Article {
     name: string;
   };
   summary?: string;
-  content?: string;
+  content: string[];
   condensedBody?: string;
   link: string;
   saved: boolean;
   keywords: string[];
   date?: Date;
 }
-
-export interface FilterByArticle {}
 
 export interface Categories {
   categories: Category[];
@@ -52,10 +50,11 @@ export interface OrderBy {
 
 export interface GetArticlesOptions {
   filterBy?: {
-    outletName?: string;
+    outletName?: string[];
     category?: string;
-    dateStart?: Date;
-    dateEnd?: Date;
+    startDate?: Date;
+    endDate?: Date;
+    search?: string;
   };
   orderBy?: OrderBy[];
   take?: number;
@@ -70,4 +69,14 @@ export interface GetCategoriesOptions {
   orderBy?: OrderBy[];
   take?: number;
   skip?: number;
+}
+
+export interface UpdateCategoryInput {
+  url: string;
+  active: boolean;
+}
+
+export interface UpdateArticleInput {
+  id: string;
+  saved: boolean;
 }
