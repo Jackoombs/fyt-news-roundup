@@ -1,10 +1,12 @@
 import { Article } from "@/types/graphql";
 import { format } from "date-fns";
 import { Card, CardHeader } from "../ui/Card";
+import ButtonOrLink from "../ui/ButtonLink/ButtonOrLink";
+import path from "path";
 
 interface Props {
   article: Article;
-  index: number;
+  articlePagePath: string;
 }
 
 export const ArticleThumbnail = ({
@@ -13,9 +15,11 @@ export const ArticleThumbnail = ({
     date,
     category,
     outlet: { name },
+    id,
   },
-  index,
+  articlePagePath,
 }: Props) => {
+  const href = path.join(articlePagePath, id);
   return (
     <Card className="h-full">
       <div className="flex flex-col justify-between gap font-body h-full">
@@ -28,13 +32,13 @@ export const ArticleThumbnail = ({
             </div>
             {date && <p className="">{format(new Date(date), "dd/MM/yyyy")}</p>}
           </div>
-
-          <a
-            className="w-full flex bg-blue-600 text-sm text-white justify-center p-2 rounded-full"
-            href=""
+          <ButtonOrLink
+            variant="BLUE"
+            className=" flex justify-center"
+            href={href}
           >
             Read more
-          </a>
+          </ButtonOrLink>
         </div>
       </div>
     </Card>
