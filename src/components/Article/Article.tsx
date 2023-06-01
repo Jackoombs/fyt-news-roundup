@@ -1,53 +1,54 @@
-import { ArticleListOutput, ArticleListInput } from "../../types/trpc";
-import { ChevronLeftIcon } from "@heroicons/react/24/solid";
-import { ArticleSaveButton } from "./ArticleSaveButton";
+import { Article } from "@/types/graphql";
+import { Card } from "../ui/Card";
+import DashboardSubHeader from "../ui/DashboardSubHeader";
+import SaveBtn from "./SaveBtn";
+import { format } from "date-fns";
 
 interface Props {
-  article: ArticleListOutput[0];
-  setActiveArticleIndex: React.Dispatch<React.SetStateAction<number>>;
-  query: ArticleListInput;
+  article: Article;
 }
 
-export const Article = ({ article, setActiveArticleIndex, query }: Props) => {
-  const splitContent = (content: string | null) => {
-    const contentArray = content?.split(`\/n`);
-
-    return contentArray?.map((p, index) => (
-      <p key={index} className="py-2 text-sm font-medium">
-        {p}
-      </p>
-    ));
-  };
-
+const Article = ({
+  article: {
+    id,
+    saved,
+    title,
+    summary,
+    content,
+    outlet: { name },
+    category,
+    date,
+  },
+}: Props) => {
   return (
-    <article className="relative flex w-full max-w-4xl flex-col items-start rounded-xl bg-indigo-600 px-8 py-24 text-indigo-50">
-      <h1 className="max-w-lg pb-8 text-3xl font-semibold">{article.title}</h1>
-      <h2 className="pb-4 text-lg font-bold">{article.summary}</h2>
-      <div className="flex text-xs font-bold tracking-widest">
-        <p>{article.outlet.name}</p>
-        <div className="my-1 mx-2 self-stretch border-r-2 border-indigo-50" />
-        <p>{article.category}</p>
+    <Card className="text-slate-900 dark:text-slate-200">
+      <div className="pb-8">
+        <div className="flex gap-1 justify-between pb-3">
+          <h3 className="font-display font-bold text-2xl">{title}</h3>
+          <SaveBtn {...{ id, saved }} />
+        </div>
+        <p className="text-sm text-slate-700 font-bold pb-2 dark:text-slate-500">
+          {summary}
+        </p>
+        <div className="text-xs font-bold text-slate-500">
+          <div className="flex divide-x-2 pb-0.5">
+            <p className="text-blue-600 pr-1">{name}</p>
+            <p className="pl-1">{category}</p>
+          </div>
+          {date && <p>{format(new Date(date), "dd/MM/yyyy")}</p>}
+        </div>
       </div>
 
-      <hr className="my-6 w-full border-t border-indigo-50" />
-
-      <div className="max-w-2xl self-center">
-        {splitContent(article.content)}
+      <div className="space-y-3 px-10 mx-atuo">
+        <hr />
+        {content.map((paragraph, index) => (
+          <p key={index} className="font-body text-sm">
+            {paragraph}
+          </p>
+        ))}
       </div>
-      <div className="absolute top-6 left-0 flex w-full justify-between px-8">
-        <button
-          className="flex items-center gap-1 underline-offset-4 hover:underline"
-          onClick={() => setActiveArticleIndex(-1)}
-        >
-          <ChevronLeftIcon className="w-5" />
-          back to articles
-        </button>
-        <ArticleSaveButton
-          {...{ query }}
-          saved={article.saved}
-          link={article.link}
-        />
-      </div>
-    </article>
+    </Card>
   );
 };
+
+export default Article;
