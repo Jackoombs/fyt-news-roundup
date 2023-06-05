@@ -1,19 +1,13 @@
 import ArticleGrid from "@/components/Article/ArticleGrid";
-import { ArticleThumbnail } from "@/components/Article/ArticleThumbnail";
 import SearchInput from "@/components/Article/SearchInput";
 import SortBtn from "@/components/Article/SortBtn";
 import OutletDropdown from "@/components/Outlet/OutletDropdown";
 import AnimateWrapper from "@/components/ui/AnimateWrapper";
 import DatePicker from "@/components/ui/Form/DateRange";
 import { getClient } from "@/lib/client";
-import { GET_ARTICLES, GET_OUTLETS } from "@/lib/queries";
+import { GET_OUTLETS } from "@/lib/queries";
 import { addWhiteSpace } from "@/lib/utils";
-import {
-  Articles,
-  GetArticlesOptions,
-  OrderBy,
-  Outlets,
-} from "@/types/graphql";
+import { GetArticlesOptions, OrderBy, Outlets } from "@/types/graphql";
 import { endOfDay, parse, startOfDay } from "date-fns";
 
 interface Props {
@@ -73,11 +67,6 @@ const Page = async ({ searchParams }: Props) => {
     orderBy: [orderBy],
   };
 
-  const { data } = await apollo.query<Articles>({
-    query: GET_ARTICLES,
-    variables: options,
-  });
-
   let outlets = await apollo.query<Outlets>({ query: GET_OUTLETS });
   return (
     <AnimateWrapper>
@@ -87,15 +76,8 @@ const Page = async ({ searchParams }: Props) => {
         <OutletDropdown outlets={outlets.data} />
         <SortBtn />
       </div>
-      <ArticleGrid>
-        {data.articles.map((article, index) => (
-          <ArticleThumbnail
-            articlePagePath="/articles"
-            key={index}
-            article={article}
-          />
-        ))}
-      </ArticleGrid>
+      {/* @ts-expect-error Server Component */}
+      <ArticleGrid {...{ options }} articlePagePath="articles" />
     </AnimateWrapper>
   );
 };
