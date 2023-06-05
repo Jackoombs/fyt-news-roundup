@@ -6,6 +6,8 @@ import OutletSelect from "@/components/Outlet/OutletSelect";
 import { DashboardMenu } from "@/components/ui/DashboardMenu";
 import DashboardMenuItem from "@/components/ui/DashboardMenu/DashboardMenuItem";
 import path from "path";
+import { Suspense } from "react";
+import Loading from "@/components/ui/Loading";
 
 interface Props {
   children: React.ReactNode;
@@ -47,7 +49,9 @@ const Layout = async ({ params, children }: Props) => {
           Articles
         </DashboardMenuItem>
       </DashboardMenu>
-      <div className="">{children}</div>
+      <div className="">
+        <Suspense fallback={<Loading />}>{children}</Suspense>
+      </div>
     </>
   );
 };
