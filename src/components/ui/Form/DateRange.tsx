@@ -21,20 +21,8 @@ const DatePicker = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
 
   const [date, setDate] = useState<DateRange | undefined>();
 
-  // useEffect(() => {
-  //   routerUtils.updateSearchParams([
-  //     {
-  //       key: "startDate",
-  //       value: date?.from ? format(date?.from, "LLLddy") : undefined,
-  //     },
-  //     {
-  //       key: "endDate",
-  //       value: date?.to ? format(date?.to, "LLLddy") : undefined,
-  //     },
-  //   ]);
-  // }, [date, routerUtils]);
-
   const handleSelect = (e: DateRange | undefined) => {
+    setDate(e);
     routerUtils.updateSearchParams([
       {
         key: "startDate",
@@ -47,28 +35,29 @@ const DatePicker = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
     ]);
   };
 
-  const parseDates = () => {
-    const date: DateRange = { from: undefined, to: undefined };
+  useEffect(() => {
+    const parseDates = () => {
+      const date: DateRange = { from: undefined, to: undefined };
 
-    if (searchParams.has("startDate")) {
-      date.from = parse(
-        searchParams.get("startDate")!.toString(),
-        "LLLddy",
-        new Date()
-      );
-    }
+      if (searchParams.has("startDate")) {
+        date.from = parse(
+          searchParams.get("startDate")!.toString(),
+          "LLLddy",
+          new Date()
+        );
+      }
 
-    if (searchParams.has("endDate")) {
-      date.to = parse(
-        searchParams.get("endDate")!.toString(),
-        "LLLddy",
-        new Date()
-      );
-    }
-    return date;
-  };
-
-  const dates = parseDates();
+      if (searchParams.has("endDate")) {
+        date.to = parse(
+          searchParams.get("endDate")!.toString(),
+          "LLLddy",
+          new Date()
+        );
+      }
+      return date;
+    };
+    setDate(parseDates());
+  }, [searchParams]);
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -83,14 +72,14 @@ const DatePicker = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
-            {dates?.from ? (
-              dates.to ? (
+            {date?.from ? (
+              date.to ? (
                 <>
-                  {format(dates.from, "LLL dd, y")} -{" "}
-                  {format(dates.to, "LLL dd, y")}
+                  {format(date.from, "LLL dd, y")} -{" "}
+                  {format(date.to, "LLL dd, y")}
                 </>
               ) : (
-                format(dates.from, "LLL dd, y")
+                format(date.from, "LLL dd, y")
               )
             ) : (
               <span>Pick a date</span>
@@ -101,8 +90,8 @@ const DatePicker = ({ className }: React.HTMLAttributes<HTMLDivElement>) => {
           <Calendar
             initialFocus
             mode="range"
-            defaultMonth={dates?.from}
-            selected={parseDates()}
+            defaultMonth={date?.from}
+            selected={date}
             onSelect={handleSelect}
             numberOfMonths={2}
           />
