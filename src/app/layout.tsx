@@ -1,8 +1,8 @@
-import "./globals.css";
-import { Raleway, Merriweather_Sans } from "next/font/google";
-import { Providers } from "./providers";
-import clsx from "clsx";
 import Nav from "@/components/Nav";
+import clsx from "clsx";
+import { Merriweather_Sans, Raleway } from "next/font/google";
+import "./globals.css";
+import { Providers } from "./providers";
 
 const raleway = Raleway({ subsets: ["latin"], variable: "--display-font" });
 const merriweather = Merriweather_Sans({
@@ -33,8 +33,8 @@ export default function RootLayout({
       >
         <Providers>
           <Nav />
-          <main className="bg-white dark:bg-slate-950 pr-[5%] pl-[calc(5%+8rem)] py-10 min-h-screen">
-            <div className="max-w-[80rem] w-full flex flex-col mx-auto">
+          <main className="bg-white dark:bg-slate-950 pr-[5%] pl-[calc(5%+8rem)] py-10 min-h-screen h-screen">
+            <div className="max-w-[80rem] w-full h-full mx-auto">
               {children}
             </div>
           </main>
