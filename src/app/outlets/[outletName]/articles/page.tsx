@@ -1,15 +1,14 @@
 import ArticleGrid from "@/components/Article/ArticleGrid";
-import { ArticleThumbnail } from "@/components/Article/ArticleThumbnail";
 import SortBtn from "@/components/Article/SortBtn";
 import AnimateWrapper from "@/components/ui/AnimateWrapper";
 import DashboardSubHeader from "@/components/ui/DashboardSubHeader";
 import DatePicker from "@/components/ui/Form/DateRange";
-import { getClient } from "@/lib/client";
-import { GET_ARTICLES } from "@/lib/queries";
+import Loading from "@/components/ui/Loading";
 import { addWhiteSpace } from "@/lib/utils";
-import { Articles, GetArticlesOptions, OrderBy } from "@/types/graphql";
+import { GetArticlesOptions, OrderBy } from "@/types/graphql";
 import { endOfDay, parse, startOfDay } from "date-fns";
 import path from "path";
+import { Suspense } from "react";
 
 interface Props {
   params: { outletName: string };
@@ -19,7 +18,6 @@ interface Props {
 }
 
 const Page = async ({ params, searchParams }: Props) => {
-  const apollo = getClient();
   let orderBy: OrderBy;
   const filterBy: GetArticlesOptions["filterBy"] = {};
   const filterParams = new URLSearchParams(searchParams);
@@ -61,11 +59,6 @@ const Page = async ({ params, searchParams }: Props) => {
     orderBy: [orderBy],
   };
 
-  const { data } = await apollo.query<Articles>({
-    query: GET_ARTICLES,
-    variables: options,
-  });
-
   const articlePagePath = path.join("outlets", params.outletName, "articles");
 
   return (
@@ -77,14 +70,8 @@ const Page = async ({ params, searchParams }: Props) => {
           <SortBtn />
         </div>
       </div>
-      <ArticleGrid>
-        {data.articles.map((article, index) => (
-          <ArticleThumbnail
-            key={article.id}
-            {...{ article, index, articlePagePath }}
-          />
-        ))}
-      </ArticleGrid>
+      {/* @ts-expect-error Server Component */}
+      <ArticleGrid {...{ options }} articlePagePath={articlePagePath} />
     </AnimateWrapper>
   );
 };
