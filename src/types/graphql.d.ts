@@ -55,6 +55,7 @@ export interface GetArticlesOptions {
     startDate?: Date;
     endDate?: Date;
     search?: string;
+    saved?: boolean;
   };
   orderBy?: OrderBy[];
   take?: number;
