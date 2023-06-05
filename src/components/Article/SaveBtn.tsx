@@ -17,22 +17,22 @@ const SaveBtn = ({ id, saved }: Props) => {
   const [updateArticle, { client }] = useMutation(UPDATE_ARTICLE);
   const updateArticleInput: UpdateArticleInput = {
     id,
-    saved,
+    saved: !isSaved,
   };
 
   const handleClick = async () => {
     setIsSaved((prev) => !prev);
+
     const { data } = await updateArticle({
       variables: { updateArticleInput },
       optimisticResponse: {
         updateArticle: {
           id,
-          saved: !isSaved,
+          active: !isSaved,
           _typename: "Article",
         },
       },
     });
-    await client.clearStore();
   };
 
   return (
